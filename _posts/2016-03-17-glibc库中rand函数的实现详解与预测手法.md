@@ -40,7 +40,7 @@ if (isset($_GET['go'])) {
 
 国内查了很多资料都没找到关于rand()函数的实现细节。本人也拙，没有直接去找源码，而是听信某篇文章，进行爆破。结果运气不好，只能gg。
 
-现在看完国外的博文之后才知道正确解法。原文详细阐述了glibc中rand函数的用法，英文好的可以直接读原文 <font color=#30a5ff size=3>[http://www.mscs.dal.ca/~selinger/random/](http://www.mscs.dal.ca/~selinger/random/)</font> 。为了日后方便我将大致内容翻译整理如下：
+现在看完国外的博文之后才知道正确解法。原文详细阐述了glibc中rand函数的用法，英文好的可以直接读原文 [_http://www.mscs.dal.ca/~selinger/random/_](http://www.mscs.dal.ca/~selinger/random/) 。为了日后方便我将大致内容翻译整理如下：
 
  rand()由一个种子（singned int seed）进行初始化，生成的过程是非线性的。但是linux中man有些小误导，在初始化完成之后，随机数的生成就是线性的，实际上是以个线性移位反馈寄存器。给没学过密码学的安利一下最简单的情况，线性移位反馈寄存器实际就是把之前某几个特定位的输出取出来，进行一个操作（多半异或），然后作为现在的输出。常见于一些流密码的生成过程。这东西大家可以类比斐波那契序列进行理解。
 
@@ -97,4 +97,4 @@ r0…r343 会被丢弃，第一个输出Oi实际上是：
 	  }
 	}
 
-<b>本文在<font color=#30a5ff size=3>[free](http://www.freebuf.com/articles/web/99093.html)</font>已经发表，转载请留意
+<b>本文在[_free_](http://www.freebuf.com/articles/web/99093.html)已经发表，转载请留意
