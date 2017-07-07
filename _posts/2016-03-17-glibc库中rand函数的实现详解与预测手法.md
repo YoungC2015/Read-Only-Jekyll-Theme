@@ -4,39 +4,38 @@ layout: post
 感谢0CTF，上交大这次举办了一个挺有深度的CTF比赛。
 
 这次比赛有一道web题，题目很简单，大致如下：
-
-	<?php
-	include('config.php');
-	session_start();
-
+```
+<?php
+include('config.php');
+session_start();
 	if($_SESSION['time'] && time() - $_SESSION['time'] > 60) {
-		session_destroy();
-		die('timeout');
-	} else {
-		$_SESSION['time'] = time();
-	}
-
-	echo rand();
-	if (isset($_GET['go'])) {
-		$_SESSION['rand'] = array();
-		$i = 5;
-		$d = '';
-		while($i--){
-			$r = (string)rand();
-			$_SESSION['rand'][] = $r;
-			$d .= $r;
-		}
-		echo md5($d);
-	} else if (isset($_GET['check'])) {
-		if ($_GET['check'] === $_SESSION['rand']) {
-			echo $flag;
-		} else {
-			echo 'die';
-			session_destroy();
-		}
-	} else {
-		show_source(__FILE__);
+	session_destroy();
+	die('timeout');
+} else {
+	$_SESSION['time'] = time();
 }
+echo rand();
+if (isset($_GET['go'])) {
+	$_SESSION['rand'] = array();
+	$i = 5;
+	$d = '';
+	while($i--){
+		$r = (string)rand();
+		$_SESSION['rand'][] = $r;
+		$d .= $r;
+	}
+	echo md5($d);
+} else if (isset($_GET['check'])) {
+	if ($_GET['check'] === $_SESSION['rand']) {
+		echo $flag;
+	} else {
+		echo 'die';
+		session_destroy();
+	}
+} else {
+	show_source(__FILE__);
+}
+```
 完全没有别的考点，就是让你预测rand()的输出。看起来的确非常简单，名为rand()的函数实际上是伪随机函数生成器，是能够进行预测的。而且题目不限制提交次数，限制两次提交的时间间隔，连敌手攻击模型都固定了：不应该用暴力拆解（然而我用了），而是通过若干次请求之后能够收集数据预测之后的rand()函数输出。
 
 国内查了很多资料都没找到关于rand()函数的实现细节。本人也拙，没有直接去找源码，而是听信某篇文章，进行爆破。结果运气不好，只能gg。
