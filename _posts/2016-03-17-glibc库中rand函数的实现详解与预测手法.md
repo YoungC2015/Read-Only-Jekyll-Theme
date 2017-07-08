@@ -1,6 +1,8 @@
 ---
 layout: post
 ---
+
+<img src="{{ site.baseurl }}/images/glibc.jpg">
 感谢0CTF，上交大这次举办了一个挺有深度的CTF比赛。
 
 这次比赛有一道web题，题目很简单，大致如下：
